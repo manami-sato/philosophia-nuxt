@@ -4,8 +4,7 @@
 		transition(name="pageFadeIn")
 			main(v-show="pageFadeInFlag").bio
 				ul.bio__thumbnail
-					//- li(v-for="(item, i) in data" :key="i", :class="{vertical:item.vertical}" ,@click="modalDisplay(i)", v-if="item.year == displayYear").bio__thumbnail--contents
-					li(v-for="(item, i) in data" :key="i", :class="{vertical:item.vertical}" ,@click="modalDisplay(i)").bio__thumbnail--contents
+					li(v-for="(item, i) in data" :key="i", :class="{vertical:item.vertical}", @click="modalDisplay(i)").bio__thumbnail--contents
 						img(:src="`${thumbnailPath}img_thumbnail_${item.contentId}.jpg`",  :alt="item.alt")
 				PageFoot
 		transition(name="modalFadeIn")
@@ -17,22 +16,20 @@
 							li(v-for="(item, i) in data[getItem].img" :key="i", v-if="imgDisplay === i")
 								img(:src="`${imgPath}img_${data[getItem].contentId}_${imgIndex}.jpg`", :alt="data[getItem].alt")
 					div.bio__modal--img--info
-						div.bio__modal--date {{data[getItem].date}}
+						div.bio__modal--date {{data[getItem].date.split("T")[0]}}
 						div.circle
 							div(v-for="(n, i) in data[getItem].img" :key="i" @click="onCircle(i)" :class="{setCircle: imgDisplay === i}")
 						div.bio__modal--place {{data[getItem].place}}
 				div.bio__modal--arrow
 					div(@click="prev", v-if="arrowFlag").bio__modal--arrow--prev
 					div(@click="next", v-if="arrowFlag").bio__modal--arrow--next
-		a(href="#" v-if="mediaFlag").bio__scrollTop
-			svg(version="1.1", xmlns="http://www.w3.org/2000/svg", xmlns:xlink="http://www.w3.org/1999/xlink", x="0px", y="0px", viewBox="0 0 36.3 109.8", style="enable-background:new 0 0 36.3 109.8;", xml:space="preserve")
-				g
-					polygon(points="1,109.8 0,109.8 0,0 36.3,36.2 35.5,37 1,2.4").bio__scrollTop--arrow
+		ScrollTop(:mediaFlag="mediaFlag")
 </template>
 
 <script>
 import Navigation from '@/src/components/Navigation.vue';
 import PageFoot from '@/src/components/PageFoot.vue';
+import ScrollTop from '@/src/components/ScrollTop.vue';
 import Mixin from '@/src/mixins/mixin.js';
 export default {
   // eslint-disable-next-line vue/multi-word-component-names, vue/component-definition-name-casing
@@ -40,6 +37,7 @@ export default {
   components: {
     Navigation,
     PageFoot,
+    ScrollTop,
   },
   mixins: [Mixin],
   async asyncData({ $microcms, params }) {
@@ -168,25 +166,26 @@ export default {
       }
     }
     &--contents {
-      width: 200px;
-      height: 200px;
-      overflow: hidden;
       display: flex;
       justify-content: center;
+      align-items: center;
+      overflow: hidden;
       cursor: pointer;
+      @media screen and (max-width: 480px) {
+        width: 200px;
+        height: 200px;
+      }
       @media screen and (min-width: 481px) {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        // display: flex;
+        // justify-content: center;
         width: 320px;
         height: 320px;
         position: relative;
-        img {
-          height: 100%;
-          width: 100%;
-          object-fit: cover;
-          transition: 0.6s width, 0.6s height;
-        }
+        // img {
+        // width: 100%;
+        // height: 100%;
+        // object-fit: cover;
+        // }
         &::before {
           content: '';
           display: block;
@@ -199,23 +198,26 @@ export default {
           opacity: 0.7;
           transition: 0.2s opacity;
           mix-blend-mode: hue;
+					z-index: 2;
         }
         &:hover {
-          img {
-            height: 110%;
-            width: 110%;
-            object-fit: cover;
-          }
           &::before {
             opacity: 0;
           }
+        }
+      }
+      &:hover {
+        img {
+          transform: scale(1.1);
         }
       }
     }
     img {
       height: 100%;
       width: 100%;
+      transform: scale(1);
       object-fit: cover;
+      transition: 0.6s transform;
     }
   }
   &__wrap {
@@ -232,9 +234,6 @@ export default {
     align-items: center;
     width: 100vw;
     height: 100vh;
-    // position: absolute;
-    // top: 0;
-    // left: 0;
     position: fixed;
     inset: 0 0 0 0;
     background-color: rgba(255, 255, 255, 0.9);
@@ -293,7 +292,6 @@ export default {
           width: 90%;
           margin: 0 auto;
           padding: 16px 0 0;
-          font-size: 1.4rem;
         }
       }
     }
@@ -386,30 +384,6 @@ export default {
       }
     }
   }
-  &__scrollTop {
-    /*-------------------------------
-			スクロールここから
-		-------------------------------*/
-    display: block;
-    position: fixed;
-    bottom: 50px;
-    right: 30px;
-    height: 150px;
-    width: 100px;
-    opacity: 1;
-    transition: 0.2s opacity;
-    &--arrow {
-      fill: #282828;
-    }
-    svg {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-    &:hover {
-      opacity: 0.5;
-    }
-  }
 }
 .modalFadeIn-enter-active,
 .modalFadeIn-leave-active,
@@ -428,15 +402,15 @@ export default {
 /*-------------------------------
 	モーダルウィンドウここまで
 -------------------------------*/
-.vertical {
-  &:hover {
-    img {
-      height: 170%;
-      width: 170%;
-      object-fit: cover;
-    }
-  }
-}
+// .vertical {
+//   &:hover {
+//     img {
+//       height: 170%;
+//       width: 170%;
+//       object-fit: cover;
+//     }
+//   }
+// }
 .circle {
   display: flex;
   margin-top: auto;

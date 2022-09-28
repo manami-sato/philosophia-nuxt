@@ -73,4 +73,13 @@ export default {
     // mode: process.env.MICROCMS_API_KEY || '' === 'production' ? 'server' : 'all',
     mode: 'all',
   },
+  router: {
+    extendRoutes(routes, resolve) {
+      routes.push({
+        name: 'custom',
+        path: '*',
+        component: resolve(__dirname, 'pages/404.vue'),
+      });
+    },
+  },
 };

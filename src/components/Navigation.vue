@@ -1,8 +1,7 @@
 <template lang="pug">
 	nav.nav
-		div.nav__h1
-			h1.nav__h1--headline
-				NuxtLink(:to="{name:'index'}", target="page").nav__h1--txt Philosophia
+		h1.nav__heading
+			NuxtLink(:to="{name:'index'}", target="page").nav__heading--link Philosophia
 		div(:class="navFlag ? 'SPNavActive' : ''").nav__link
 			ul.nav__link--list
 				li(v-for="(item, i) in year", :key="i", :class="{navActive:Number(item) === Number(getYear)}").nav__link--list--item
@@ -10,7 +9,7 @@
 			NuxtLink(to="/about", :class="{aboutActive:aboutFlag}").nav__link--about
 				img(:src="iconPath", :alt="name")
 				p(v-if="navFlag").nav__link--txt About
-		//- div(@click="navFlag = !navFlag", :class="navFlag ? 'navBtnActive' : 'navBtnDisActive'").nav__btn
+		div(@click="navFlag = !navFlag", :class="navFlag ? 'navBtnActive' : 'navBtnDisActive'").nav__btn
 </template>
 
 <script>
@@ -33,11 +32,6 @@ export default {
       yearFlag: false,
     };
   },
-  mounted() {
-    if (window.matchMedia('(max-width: 480px)').matches) {
-      this.navFlag = true;
-    }
-  },
 };
 </script>
 
@@ -55,17 +49,20 @@ export default {
   position: fixed;
   top: 0;
   z-index: 25;
-  &__h1 {
+  &__heading {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     height: 100%;
     position: relative;
-    z-index: 5;
-    &--headline {
-      font-size: 3rem;
-      font-family: $font;
-      margin: 0 24px 0 0;
+    font-size: 3.2rem;
+    font-family: $font;
+    &--link {
+      opacity: 1;
+      transition: opacity 0.2s;
+      &:hover {
+        opacity: 0.5;
+      }
     }
   }
   &__link {
@@ -195,44 +192,43 @@ export default {
       }
     }
   }
-  // &__btn {
-  //   @media screen and (min-width: 721px) {
-  //     display: none;
-  //   }
-  //   @media screen and (max-width: 720px) {
-  //     display: flex;
-  //     justify-content: flex-end;
-  //     flex-direction: column;
-  //     width: 32px;
-  //     height: 13px;
-  //     // background: lime;
-  //     position: relative;
-  //     opacity: 1;
-  //     &::before,
-  //     &::after {
-  //       content: '';
-  //       display: block;
-  //       width: 32px;
-  //       height: 3px;
-  //       background: $accentColor;
-  //       border-radius: 2px;
-  //       position: absolute;
-  //       inset: auto auto auto 0;
-  //       transform: rotateZ(0);
-  //       transition: 0.2s opacity, 0.2s width, 0.2s inset, 0.2s transform;
-  //     }
-  //     &::before {
-  //       top: 0;
-  //     }
-  //     &::after {
-  //       bottom: 0;
-  //     }
-  //     &:hover {
-  //       opacity: 0.5;
-  //       cursor: pointer;
-  //     }
-  //   }
-  // }
+  &__btn {
+    @media screen and (min-width: 721px) {
+      display: none;
+    }
+    @media screen and (max-width: 720px) {
+      display: flex;
+      justify-content: flex-end;
+      flex-direction: column;
+      width: 32px;
+      height: 13px;
+      position: relative;
+      opacity: 1;
+      &::before,
+      &::after {
+        content: '';
+        display: block;
+        width: 32px;
+        height: 3px;
+        background: $accentColor;
+        border-radius: 2px;
+        position: absolute;
+        inset: auto auto auto 0;
+        transform: rotateZ(0);
+        transition: 0.2s opacity, 0.2s width, 0.2s inset, 0.2s transform;
+      }
+      &::before {
+        top: 0;
+      }
+      &::after {
+        bottom: 0;
+      }
+      &:hover {
+        opacity: 0.5;
+        cursor: pointer;
+      }
+    }
+  }
 }
 .navActive {
   a {
@@ -261,13 +257,13 @@ export default {
   opacity: 1;
   animation: SPActive 0.2s;
 }
-// .SPNavDisActive {
-//   @media screen and (max-width: 720px) {
-//     display: none;
-//     opacity: 0;
-//     animation: SPDisActive 0.2s;
-//   }
-// }
+.SPNavDisActive {
+  @media screen and (max-width: 720px) {
+    display: none;
+    opacity: 0;
+    animation: SPDisActive 0.2s;
+  }
+}
 .aboutActive {
   @media screen and (min-width: 721px) {
     border: $accentColor 4px solid;

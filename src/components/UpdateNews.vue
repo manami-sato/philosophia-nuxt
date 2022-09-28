@@ -14,21 +14,6 @@ export default {
       newsPhotos: '',
     };
   },
-  mounted() {
-    // fetch(`${this.productsData}`)
-    //   .then((res) => {
-    //     return res.json();
-    //   })
-    //   .then((json) => {
-    //     this.res = json.photo[json.photo.length - 1];
-    //     this.newsPlace = this.res.place;
-    //     this.newsDate = this.res.date;
-    //     this.newsPhotos = this.res.img;
-    //   })
-    // .catch((err) => {
-    //   console.log(err);
-    // });
-  },
 };
 </script>
 
