@@ -63,14 +63,14 @@ export default {
       scrollY: 0,
     };
   },
-  head: {
-    title() {
-      return {
-        inner: "biography",
-        separator: "|",
-        complement: "Philosophia",
-      };
-    },
+  head() {
+    return {
+      title: 'Biography｜Philosophia',
+      meta: [
+        { hid: 'og:title', property: 'og:title', content: 'Biography｜Philosophia' },
+        { hid: 'og:url', property: 'og:url', content: 'https://www.philosophia000.xyz/biography' },
+      ]
+    }
   },
   mounted() {
     if(window.matchMedia("(min-width: 481px)").matches){

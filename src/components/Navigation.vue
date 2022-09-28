@@ -8,7 +8,7 @@
 				li(v-for="(year,i) in yearList", :key="i", @click="yearClick(i)", :class="{navActive:year.flag}").nav__link--list--year
 					NuxtLink(:to="{name:'biography',params:{ yearId: `${i}`}}") {{year.id}}
 			NuxtLink(to="/about", :class="{aboutActive:!biographyFlag}").nav__link--about
-				img(:src="`${iconPath}icon.jpg`", :alt="name")
+				img(:src="iconPath", :alt="name")
 				p(v-if="navFlag").nav__link--txt About
 		div(@click="navFlag = !navFlag", :class="navFlag ? 'navBtnActive' : 'navBtnDisActive'").nav__btn
 </template>

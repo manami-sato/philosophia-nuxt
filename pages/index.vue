@@ -32,6 +32,9 @@ export default {
   //   // console.log(data);
   // },
   mixins: [Mixin],
+  // beforeRouteUpdate(to, from, next) {
+  //   next();
+  // },
   data() {
     return {
       res: [],
@@ -40,15 +43,6 @@ export default {
       indexFlag: true,
     };
   },
-  // head: {
-  //   title() {
-  //     return {
-  //       inner: "",
-  //       separator: " ",
-  //       complement: "Philosophia",
-  //     };
-  //   },
-  // },
   created() {
     if(process.browser){
       // eslint-disable-next-line nuxt/no-globals-in-created
@@ -80,7 +74,9 @@ export default {
       }
     },
     pageMove() {
-      this.$router.push('/biography');
+      this.$router.push({
+        path: '/biography',
+      })
     },
     handleScroll() {
       if (this.indexFlag) {

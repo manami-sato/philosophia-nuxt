@@ -28,8 +28,8 @@ export default {
         flag: false,
       },
     ],
-    path: 'https://philosophia000.xyz',
-    iconPath: 'https://manami-sato.github.io/philosophia/src/assets/img/',
+    path: 'https://www.philosophia000.xyz/',
+    iconPath: 'https://images.microcms-assets.io/assets/44cafac7c3a24046bac46a486b20bc92/fd15a7cba0d84479b114edf5ae7d5ca6/icon.jpg',
     imgPath: 'https://manami-sato.github.io/philosophia-img/img/',
     thumbnailPath: 'https://manami-sato.github.io/philosophia-img/thumbnail/',
     productsData:
@@ -37,5 +37,6 @@ export default {
     name: '月波',
     enName: 'Tsukinami',
     title: 'Philosophia',
+    titleFull: 'Philosophia - 月波’s Photography Portfolio',
   }),
 }
