@@ -67,8 +67,6 @@ export default {
       pageFadeInFlag: false,
       imgNumber: [],
       arrowFlag: true,
-      // displayYear: 0,
-      // scrollY: 0,
     };
   },
   head() {
@@ -83,7 +81,7 @@ export default {
         {
           hid: 'og:url',
           property: 'og:url',
-          content: 'https://www.philosophia000.xyz/biography',
+          content: `https://www.philosophia000.xyz/biography/${this.id}`,
         },
       ],
     };

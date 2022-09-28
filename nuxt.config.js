@@ -1,7 +1,7 @@
 const title = 'Philosophia';
 const desc = '月波の写真ポートフォリオです。';
 const url = 'https://www.philosophia000.xyz/';
-const card = 'https://manami-sato.github.io/philosophia-img/img/img_32_06.jpg';
+const card = 'https://manami-sato.github.io/philosophia-img/img/img_032_06.jpg';
 
 require('dotenv').config();
 
