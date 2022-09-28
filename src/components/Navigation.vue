@@ -77,7 +77,7 @@ export default {
       flex-direction: column;
       width: 100vw;
       height: 100vh;
-      background: #fff;
+      background: $baceColor;
       padding: 0 0 64px;
       opacity: 0;
       position: fixed;
@@ -145,10 +145,12 @@ export default {
         width: 64px;
         height: 64px;
         border-radius: 50%;
-        border: transparent 4px solid;
+        border-color: transparent;
+        border-style: solid;
+        border-width: 4px;
         opacity: 1;
         overflow: hidden;
-        transition: 0.2s opacity, 0.2s border;
+        transition: 0.2s opacity, 0.2s border-color;
         img {
           width: 100%;
           height: 100%;
@@ -156,6 +158,7 @@ export default {
         }
         &:hover {
           opacity: 0.6;
+          border-color: $accentColor;
         }
         p {
           display: none;
