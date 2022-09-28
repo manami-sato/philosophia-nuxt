@@ -3,15 +3,15 @@
 </template>
 
 <script defer>
-import Mixin from "@/src/mixins/mixin.js";
+import Mixin from '@/src/mixins/mixin.js';
 export default {
   mixins: [Mixin],
   data() {
     return {
       res: [],
-      newsPlace: "",
-      newsDate: "",
-      newsPhotos: "",
+      newsPlace: '',
+      newsDate: '',
+      newsPhotos: '',
     };
   },
   mounted() {
@@ -25,15 +25,15 @@ export default {
     //     this.newsDate = this.res.date;
     //     this.newsPhotos = this.res.img;
     //   })
-      // .catch((err) => {
-      //   console.log(err);
-      // });
+    // .catch((err) => {
+    //   console.log(err);
+    // });
   },
 };
 </script>
 
 <style lang="scss">
-@import "@/src/assets/scss/common.scss";
+@import '@/src/assets/scss/common.scss';
 .news {
   font-size: 1.5rem;
   font-family: $font2;

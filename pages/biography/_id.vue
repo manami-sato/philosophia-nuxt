@@ -1,25 +1,26 @@
 <template lang="pug">
 	main
-		Navigation(@yearClickData="displayYear = parseInt($event)", :biographyFlag="true")
+		Navigation(:aboutFlag="false", :getYear="id")
 		transition(name="pageFadeIn")
 			main(v-show="pageFadeInFlag").bio
 				ul.bio__thumbnail
-					li(v-for="(data, i) in res" :key="i", :class="{vertical:data.vertical}" ,@click="modalDisplay(i)", v-if="data.year == displayYear").bio__thumbnail--contents
-						img(:src="`${thumbnailPath}/img_thumbnail_${data.id}.jpg`",  :alt="data.alt")
+					//- li(v-for="(item, i) in data" :key="i", :class="{vertical:item.vertical}" ,@click="modalDisplay(i)", v-if="item.year == displayYear").bio__thumbnail--contents
+					li(v-for="(item, i) in data" :key="i", :class="{vertical:item.vertical}" ,@click="modalDisplay(i)").bio__thumbnail--contents
+						img(:src="`${thumbnailPath}img_thumbnail_${item.contentId}.jpg`",  :alt="item.alt")
 				PageFoot
 		transition(name="modalFadeIn")
-			div(v-if="modalDisplayFlag" :style="{top:modalHeight + 'px'}").bio__modal
+			div(v-if="modalDisplayFlag").bio__modal
 				div(@click="modalDisplay").bio__modal--back
 				div.bio__modal--img
 					ul.bio__modal--img--list
 						transition(name="modalImgFadeIn")
-							li(v-for="(img, i) in imgNumber" :key="i", v-if="imgDisplay === i")
-								img(:src="`${imgPath}/img_${res[selectContents].id}_${img}.jpg`", :alt="res[selectContents].alt")
+							li(v-for="(item, i) in data[getItem].img" :key="i", v-if="imgDisplay === i")
+								img(:src="`${imgPath}img_${data[getItem].contentId}_${imgIndex}.jpg`", :alt="data[getItem].alt")
 					div.bio__modal--img--info
-						div.bio__modal--date {{res[selectContents].date}}
+						div.bio__modal--date {{data[getItem].date}}
 						div.circle
-							div(v-for="(n, i) in imgNumber" :key="i" @click="onCircle(i)" :class="{setCircle: imgDisplay === i}")
-						div.bio__modal--place {{res[selectContents].place}}
+							div(v-for="(n, i) in data[getItem].img" :key="i" @click="onCircle(i)" :class="{setCircle: imgDisplay === i}")
+						div.bio__modal--place {{data[getItem].place}}
 				div.bio__modal--arrow
 					div(@click="prev", v-if="arrowFlag").bio__modal--arrow--prev
 					div(@click="next", v-if="arrowFlag").bio__modal--arrow--next
@@ -30,143 +31,108 @@
 </template>
 
 <script>
-import Navigation from "@/src/components/Navigation.vue";
-import PageFoot from "@/src/components/PageFoot.vue";
-import Mixin from "@/src/mixins/mixin.js";
-let scrollY = 0;
-const getHeight = () => {
-  scrollY = window.pageYOffset;
-  return scrollY;
-};
+import Navigation from '@/src/components/Navigation.vue';
+import PageFoot from '@/src/components/PageFoot.vue';
+import Mixin from '@/src/mixins/mixin.js';
 export default {
   // eslint-disable-next-line vue/multi-word-component-names, vue/component-definition-name-casing
-  name: "biography",
+  name: 'biography',
   components: {
     Navigation,
     PageFoot,
   },
   mixins: [Mixin],
+  async asyncData({ $microcms, params }) {
+    const res = await $microcms.get({
+      endpoint: 'data',
+      queries: { limit: 100 },
+    });
+    const id = Number(params.id);
+    const data = res.contents
+      .reverse()
+      .filter((item) => Number(item.year[0].id) === id);
+    return { data, id };
+  },
   data() {
     return {
-      res: [], // data全体
+      id: 0,
+      data: [],
       flag: 0,
       modalDisplayFlag: false, // モーダル出すか出さないか
-      selectContents: 0,
+      getItem: 0,
       imgDisplay: 0, // 現在表示している○○枚目
+      imgIndex: 0,
       modalHeight: 0, // モーダルの高さ
       mediaFlag: false, // PCか否か
-      thumbnailWrap: 0,
       pageFadeInFlag: false,
       imgNumber: [],
       arrowFlag: true,
-      displayYear: 0,
-      scrollY: 0,
+      // displayYear: 0,
+      // scrollY: 0,
     };
   },
   head() {
     return {
-      title: 'Biography｜Philosophia',
+      title: `${this.id} Biography｜Philosophia`,
       meta: [
-        { hid: 'og:title', property: 'og:title', content: 'Biography｜Philosophia' },
-        { hid: 'og:url', property: 'og:url', content: 'https://www.philosophia000.xyz/biography' },
-      ]
-    }
+        {
+          hid: 'og:title',
+          property: 'og:title',
+          content: `${this.id} Biography｜Philosophia`,
+        },
+        {
+          hid: 'og:url',
+          property: 'og:url',
+          content: 'https://www.philosophia000.xyz/biography',
+        },
+      ],
+    };
   },
   mounted() {
-    if(window.matchMedia("(min-width: 481px)").matches){
-      this.ediaFlag = true;
-    }
-    // console.log(this.height, scrollY);
-    if (this.$route.params.yearId) {
-      for (let i = 0; i < this.yearList.length; i++) {
-        if (this.displayYear === this.$route.params.yearId) {
-          this.displayYear = this.yearList[i].id;
-        }
-      }
-    } else {
-      this.displayYear = this.yearList[0].id;
+    this.id = this.$route.params.id;
+    if (window.matchMedia('(min-width: 481px)').matches) {
+      this.mediaFlag = true;
     }
     this.pageFadeInFlag = !this.pageFadeInFlag;
-    // 画像リスト、モーダル
-    fetch(`${this.productsData}`)
-      .then((res) => {
-        return res.json();
-      })
-      .then((json) => {
-        this.res = json.photo;
-      });
   },
   beforeDestroy() {
     this.pageFadeInFlag = !this.pageFadeInFlag;
   },
   methods: {
+    number() {
+      if (this.imgDisplay < 10) {
+        this.imgIndex = '0' + (this.imgDisplay + 1);
+      }
+    },
     modalDisplay(i) {
-      this.selectContents = i;
+      this.getItem = i;
       this.modalDisplayFlag = !this.modalDisplayFlag;
       this.imgDisplay = 0;
-      if (this.modalDisplayFlag) {
-        getHeight(); // モーダルの表示位置をトップに固定
-        this.modalHeight = scrollY;
-        // スクロール禁止
-        document.addEventListener("touchmove", disableScroll, {
-          passive: false,
-        });
-        document.addEventListener("mousewheel", disableScroll, {
-          passive: false,
-        });
-        for (
-          let imgIndex = 1;
-          imgIndex <= this.res[this.selectContents].img;
-          imgIndex++
-        ) {
-          if (imgIndex < 10) {
-            this.imgNumber.push("0" + imgIndex);
-          } else {
-            this.imgNumber.push(imgIndex);
-          }
-        }
-        if (this.res[this.selectContents].img === 1) {
-          this.arrowFlag = !this.arrowFlag;
-        }
-      } else {
-        this.imgNumber = [];
-        if (!this.arrowFlag) {
-          this.arrowFlag = !this.arrowFlag;
-        }
-        // スクロール再開
-        document.removeEventListener("touchmove", disableScroll, {
-          passive: false,
-        });
-        document.removeEventListener("mousewheel", disableScroll, {
-          passive: false,
-        });
-      }
+      this.number();
     },
     next() {
       this.imgDisplay++;
-      if (this.imgDisplay === this.res[this.selectContents].img) {
+      if (this.imgDisplay === this.data[this.getItem].img) {
         this.imgDisplay = 0;
       }
+      this.number();
     },
     prev() {
       this.imgDisplay--;
       if (this.imgDisplay < 0) {
-        this.imgDisplay = this.res[this.selectContents].imgh - 1;
+        this.imgDisplay = this.data[this.getItem].img - 1;
       }
+      this.number();
     },
     onCircle(i) {
       this.imgDisplay = i;
     },
   },
 };
-// モーダル開いた時スクロールを拒否
-function disableScroll(event) {
-  event.preventDefault();
-}
 </script>
 
 <style lang="scss">
-@import "@/src/assets/scss/common.scss";
+@import '@/src/assets/scss/common.scss';
 .bio {
   align-items: center;
   flex-direction: column;
@@ -176,22 +142,22 @@ function disableScroll(event) {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    width: auto;
-    padding: 152px 0 0 5%;
+    width: fit-content;
+    padding: 160px 0 0 0;
     @media screen and (min-width: 481px) {
       gap: 16px;
     }
     @media screen and (min-width: 1081px) {
-      width: 1200px;
+      width: calc(320px * 3 + 16px * 2);
     }
     @media screen and (max-width: 1120px) {
-      width: 800px;
+      width: calc(320px * 2 + 16px * 1);
     }
     @media screen and (max-width: 980px) {
-      width: 800px;
+      width: calc(320px * 2 + 16px * 1);
     }
     @media screen and (max-width: 800px) {
-      width: 500px;
+      width: 320px;
     }
     @media screen and (max-width: 480px) {
       justify-content: flex-start;
@@ -224,7 +190,7 @@ function disableScroll(event) {
           transition: 0.6s width, 0.6s height;
         }
         &::before {
-          content: "";
+          content: '';
           display: block;
           width: 100%;
           height: 100%;
@@ -268,9 +234,11 @@ function disableScroll(event) {
     align-items: center;
     width: 100vw;
     height: 100vh;
-    position: absolute;
-    top: 0;
-    left: 0;
+    // position: absolute;
+    // top: 0;
+    // left: 0;
+    position: fixed;
+    inset: 0 0 0 0;
     background-color: rgba(255, 255, 255, 0.9);
     z-index: 50;
     &--img {
@@ -310,7 +278,7 @@ function disableScroll(event) {
         }
       }
       &--info {
-        font-family: "Crimson Text", serif;
+        font-family: 'Crimson Text', serif;
         @media screen and (min-width: 481px) {
           display: flex;
           justify-content: space-between;

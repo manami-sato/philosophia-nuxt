@@ -5,69 +5,44 @@
 				NuxtLink(:to="{name:'index'}", target="page").nav__h1--txt Philosophia
 		div(:class="navFlag ? 'SPNavActive' : ''").nav__link
 			ul.nav__link--list
-				li(v-for="(year,i) in yearList", :key="i", @click="yearClick(i)", :class="{navActive:year.flag}").nav__link--list--year
-					NuxtLink(:to="{name:'biography',params:{ yearId: `${i}`}}") {{year.id}}
-			NuxtLink(to="/about", :class="{aboutActive:!biographyFlag}").nav__link--about
+				li(v-for="(item, i) in year", :key="i", :class="{navActive:Number(item) === Number(getYear)}").nav__link--list--item
+					NuxtLink(:to="`/biography/${item}`") {{item}}
+			NuxtLink(to="/about", :class="{aboutActive:aboutFlag}").nav__link--about
 				img(:src="iconPath", :alt="name")
 				p(v-if="navFlag").nav__link--txt About
-		div(@click="navFlag = !navFlag", :class="navFlag ? 'navBtnActive' : 'navBtnDisActive'").nav__btn
+		//- div(@click="navFlag = !navFlag", :class="navFlag ? 'navBtnActive' : 'navBtnDisActive'").nav__btn
 </template>
 
 <script>
-import UpdateNews from "@/src/components/UpdateNews.vue";
-import Mixin from "@/src/mixins/mixin.js";
+import UpdateNews from '@/src/components/UpdateNews.vue';
+import Mixin from '@/src/mixins/mixin.js';
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
-  name: "Navigation",
+  name: 'Navigation',
   components: {
     UpdateNews,
   },
   mixins: [Mixin],
   // eslint-disable-next-line vue/require-prop-types
-  props: ["biographyFlag"],
+  props: ['aboutFlag', 'getYear'],
   data() {
     return {
-      activeYearIndex: "",
+      activeYearIndex: '',
       widthFlag: true,
       navFlag: false,
+      yearFlag: false,
     };
   },
   mounted() {
-    if (this.biographyFlag) {
-      if (!this.$route.params.yearId === "") {
-        this.activeYearIndex = parseInt(this.$route.params.yearId);
-      } else if (!this.activeYearIndex === true) {
-        this.activeYearIndex = 0;
-      }
-      this.yearList[this.activeYearIndex].flag = true;
-      this.$emit("yearClickData", this.yearList[this.activeYearIndex].id);
-    } else {
-      this.activeYearIndex = "";
+    if (window.matchMedia('(max-width: 480px)').matches) {
+      this.navFlag = true;
     }
-  },
-  methods: {
-    yearClick(i) {
-      this.navFlag = false;
-      if (this.biographyFlag) {
-        this.activeYearIndex = i;
-        for (let i = 0; i < this.yearList.length; i++) {
-          if (this.yearList[i].flag) {
-            this.yearList[i].flag = !this.yearList[i].flag;
-          }
-        }
-        this.yearList[this.activeYearIndex].flag = true;
-        this.$emit("yearClickData", this.yearList[this.activeYearIndex].id);
-        if (this.biographyFlag) {
-          return false;
-        }
-      }
-    },
   },
 };
 </script>
 
 <style lang="scss">
-@import "@/src/assets/scss/common.scss";
+@import '@/src/assets/scss/common.scss';
 .nav {
   display: flex;
   justify-content: space-between;
@@ -125,7 +100,7 @@ export default {
       @media screen and (max-width: 720px) {
         display: block;
       }
-      &--year {
+      &--item {
         @media screen and (min-width: 721px) {
           /* PCサイト */
           display: flex;
@@ -220,44 +195,44 @@ export default {
       }
     }
   }
-  &__btn {
-    @media screen and (min-width: 721px) {
-      display: none;
-    }
-    @media screen and (max-width: 720px) {
-      display: flex;
-      justify-content: flex-end;
-      flex-direction: column;
-      width: 32px;
-      height: 13px;
-      // background: lime;
-      position: relative;
-      opacity: 1;
-      &::before,
-      &::after {
-        content: "";
-        display: block;
-        width: 32px;
-        height: 3px;
-        background: $accentColor;
-        border-radius: 2px;
-        position: absolute;
-        inset: auto auto auto 0;
-        transform: rotateZ(0);
-        transition: 0.2s opacity, 0.2s width, 0.2s inset, 0.2s transform;
-      }
-      &::before {
-        top: 0;
-      }
-      &::after {
-        bottom: 0;
-      }
-      &:hover {
-        opacity: 0.5;
-        cursor: pointer;
-      }
-    }
-  }
+  // &__btn {
+  //   @media screen and (min-width: 721px) {
+  //     display: none;
+  //   }
+  //   @media screen and (max-width: 720px) {
+  //     display: flex;
+  //     justify-content: flex-end;
+  //     flex-direction: column;
+  //     width: 32px;
+  //     height: 13px;
+  //     // background: lime;
+  //     position: relative;
+  //     opacity: 1;
+  //     &::before,
+  //     &::after {
+  //       content: '';
+  //       display: block;
+  //       width: 32px;
+  //       height: 3px;
+  //       background: $accentColor;
+  //       border-radius: 2px;
+  //       position: absolute;
+  //       inset: auto auto auto 0;
+  //       transform: rotateZ(0);
+  //       transition: 0.2s opacity, 0.2s width, 0.2s inset, 0.2s transform;
+  //     }
+  //     &::before {
+  //       top: 0;
+  //     }
+  //     &::after {
+  //       bottom: 0;
+  //     }
+  //     &:hover {
+  //       opacity: 0.5;
+  //       cursor: pointer;
+  //     }
+  //   }
+  // }
 }
 .navActive {
   a {

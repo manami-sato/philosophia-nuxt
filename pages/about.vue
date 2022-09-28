@@ -1,6 +1,6 @@
 <template lang="pug">
 	main
-		Navigation(:biographyFlag="false")
+		Navigation(:aboutFlag="true", :getYear="0")
 		transition(name="pageFadeIn")
 			div(v-show="pageFadeInFlag").about
 				div.about__detail
@@ -56,12 +56,12 @@
 </template>
 
 <script>
-import Navigation from "@/src/components/Navigation.vue";
-import PageFoot from "@/src/components/PageFoot.vue";
-import Mixin from "@/src/mixins/mixin.js";
+import Navigation from '@/src/components/Navigation.vue';
+import PageFoot from '@/src/components/PageFoot.vue';
+import Mixin from '@/src/mixins/mixin.js';
 export default {
   // eslint-disable-next-line vue/multi-word-component-names, vue/component-definition-name-casing
-  name: "About",
+  name: 'About',
   components: {
     Navigation,
     PageFoot,
@@ -70,20 +70,28 @@ export default {
   data() {
     return {
       pageFadeInFlag: false,
-      ttlDisplayFlag:false,
+      ttlDisplayFlag: false,
     };
   },
   head() {
     return {
       title: 'About｜Philosophia',
       meta: [
-        { hid: 'og:title', property: 'og:title', content: 'About｜Philosophia' },
-        { hid: 'og:url', property: 'og:url', content: 'https://www.philosophia000.xyz/about' },
-      ]
-    }
+        {
+          hid: 'og:title',
+          property: 'og:title',
+          content: 'About｜Philosophia',
+        },
+        {
+          hid: 'og:url',
+          property: 'og:url',
+          content: 'https://www.philosophia000.xyz/about',
+        },
+      ],
+    };
   },
   mounted() {
-    if( window.matchMedia("(max-width: 480px)").matches){
+    if (window.matchMedia('(max-width: 480px)').matches) {
       this.ttlDisplayFlag = true;
     }
     this.pageFadeInFlag = !this.pageFadeInFlag;
@@ -92,7 +100,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "@/src/assets/scss/common.scss";
+@import '@/src/assets/scss/common.scss';
 .about {
   display: flex;
   font-size: 1.3rem;
@@ -143,7 +151,7 @@ export default {
           font-size: 1.7rem;
         }
         &::after {
-          content: "-";
+          content: '-';
           margin: 0 7px;
           font-weight: normal;
         }

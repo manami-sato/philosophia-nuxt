@@ -1,9 +1,9 @@
-const title = 'Philosophia'
-const desc = '月波の写真ポートフォリオです。'
-const url = 'https://www.philosophia000.xyz/'
-const card = 'https://manami-sato.github.io/philosophia-img/img/img_32_06.jpg'
+const title = 'Philosophia';
+const desc = '月波の写真ポートフォリオです。';
+const url = 'https://www.philosophia000.xyz/';
+const card = 'https://manami-sato.github.io/philosophia-img/img/img_32_06.jpg';
 
-require('dotenv').config()
+require('dotenv').config();
 
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -63,22 +63,14 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
 
-  // microcms: {
-  //   options: {
-  //     serviceDomain: process.env.MICROCMS_API_URL || '', // サービスID（サブドメイン部分）
-  //     apiKey: process.env.MICROCMS_API_KEY || '', // サービス固有のAPIキー
-  //   },
-  //   // ↓SSR処理をするならこっちにする必要がある
-  //   // mode: 'server',
-  //   // mode: process.env.MICROCMS_API_KEY || '' === 'production' ? 'server' : 'all',
-  //   mode: 'all',
-  // },
-
   microcms: {
     options: {
-      serviceDomain: process.env.MICROCMS_API_URL || '',
-      apiKey: process.env.MICROCMS_API_KEY || '',
+      serviceDomain: process.env.MICROCMS_API_URL || '', // サービスID（サブドメイン部分）
+      apiKey: process.env.MICROCMS_API_KEY || '', // サービス固有のAPIキー
     },
-    mode: process.env.NODE_ENV === 'production' ? 'server' : 'all',
+    // ↓SSR処理をするならこっちにする必要がある
+    // mode: 'server',
+    // mode: process.env.MICROCMS_API_KEY || '' === 'production' ? 'server' : 'all',
+    mode: 'all',
   },
-}
+};

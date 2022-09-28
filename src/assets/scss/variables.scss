@@ -3,9 +3,9 @@ $accentColor: #333;
 $navWidth: 80px;
 $contentsHeight: calc(100vh - 40px);
 $partsHoverColor: rgb(212, 212, 212);
-$font: "Poiret One", cursive;
-$font2: "Rajdhani", sans-serif;
-@import url("https://fonts.googleapis.com/css2?family=Poiret+One&family=Rajdhani&display=swap");
+$font: 'Poiret One', cursive;
+$font2: 'Rajdhani', sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Poiret+One&family=Rajdhani&display=swap');
 
 @mixin contentsSet {
   position: absolute;
@@ -17,7 +17,7 @@ $font2: "Rajdhani", sans-serif;
 }
 
 @mixin backSet {
-  content: "";
+  content: '';
   display: block;
   position: absolute;
   width: 1px;
@@ -39,7 +39,7 @@ $font2: "Rajdhani", sans-serif;
     height: 100vh;
   }
   @media screen and (max-width: 480px) {
-    transform:scale(80%);
+    transform: scale(80%);
   }
   &:hover {
     &::before {
@@ -50,7 +50,7 @@ $font2: "Rajdhani", sans-serif;
     }
   }
   &::before {
-    content: "";
+    content: '';
     display: block;
     width: 1px;
     height: 35px;
@@ -59,7 +59,7 @@ $font2: "Rajdhani", sans-serif;
     position: absolute;
   }
   &::after {
-    content: "";
+    content: '';
     display: block;
     width: 1px;
     height: 35px;
@@ -70,7 +70,7 @@ $font2: "Rajdhani", sans-serif;
 }
 
 @mixin iconFrameSet {
-  content: "";
+  content: '';
   position: absolute;
   width: 0;
   height: 0;

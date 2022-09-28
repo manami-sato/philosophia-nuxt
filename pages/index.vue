@@ -1,95 +1,86 @@
 <template lang="pug">
-	transition(name="scrollAction")
+	//- transition(name="scrollAction")
 		main(v-if="indexFlag", @touchstart="handleScroll").index
 			ul.index__img
 				li(v-for="(img, i) in indexImg", :key="img", v-show="coverImgDisplay === i")
 					transition(name="mainImg")
-						img(v-bind:src="img", alt="Philosophia", v-show="coverImgDisplay === i")
+						img(:src="img", alt="Philosophia", v-show="coverImgDisplay === i")
 			div.index__ttl
 				h1 {{title}}
-				p {{enName}} Portfolio Site
+				p {{enName}}’s Photography Portfolio
 			div.index__mouse scroll
 </template>
 
 <script>
-import Navigation from "@/src/components/Navigation.vue";
-import UpdateNews from "@/src/components/UpdateNews.vue";
-import Mixin from "@/src/mixins/mixin.js";
+import Navigation from '@/src/components/Navigation.vue';
+import UpdateNews from '@/src/components/UpdateNews.vue';
+import Mixin from '@/src/mixins/mixin.js';
 export default {
   // eslint-disable-next-line vue/multi-word-component-names, vue/component-definition-name-casing
-  name: "index",
+  name: 'index',
   components: {
     Navigation,
     UpdateNews,
   },
-  // async asyncData({ $microcms }) {
-  //   const data = await $microcms.get({
-  //     endpoint: 'data',
-  //     queries: { limit: 100 },
-  //   });
-  //   return data;
-  //   // eslint-disable-next-line no-unreachable
-  //   // console.log(data);
-  // },
   mixins: [Mixin],
-  // beforeRouteUpdate(to, from, next) {
-  //   next();
-  // },
   data() {
     return {
       res: [],
-      coverImg: 0,
       coverImgDisplay: 0,
       indexFlag: true,
     };
   },
   created() {
-    if(process.browser){
+    if (process.browser) {
       // eslint-disable-next-line nuxt/no-globals-in-created
-       window.addEventListener("scroll", this.handleScroll);
+      window.addEventListener('scroll', this.handleScroll);
     }
   },
+  // beforeDestroy() {
+  //   console.log(this.indexFlag);
+  // },
   destroyed() {
-    window.removeEventListener("scroll", this.handleScroll);
+    window.removeEventListener('scroll', this.handleScroll);
   },
-  updated(i) {
-    // this.height = window.innerHeight;
-    this.SPindex();
-    // ファーストビューのアニメーション
-    this.coverImg = i;
-    const mainImgSlide = () => {
-      this.coverImgDisplay++;
-      if (this.coverImgDisplay === this.res.length) {
-        this.coverImgDisplay = 0;
-      }
-    };
-    setTimeout(mainImgSlide, 6000);
+  mounted() {
+    this.$router.push({
+      path: '/biography/2022',
+    });
+    // setTimeout(this.mainImgSlide, 4000);
+    // this.SPindex();
   },
   methods: {
     SPindex() {
       // SP版indexの処理
-      if (window.matchMedia("(max-width: 480px)").matches) {
+      if (window.matchMedia('(max-width: 480px)').matches) {
         // 高さを画面いっぱいに
-        document.querySelector("main").style.height = this.height + `px`;
+        this.height = window.innerHeight;
+        document.querySelector('main').style.height = this.height + `px`;
       }
     },
     pageMove() {
       this.$router.push({
-        path: '/biography',
-      })
+        path: '/biography/2022',
+      });
     },
     handleScroll() {
-      if (this.indexFlag) {
-        this.indexFlag = !this.indexFlag;
-      }
+      console.log('ok');
+      this.indexFlag = false;
       setTimeout(this.pageMove, 500);
+    },
+    mainImgSlide() {
+      this.coverImgDisplay++;
+      if (this.coverImgDisplay === this.indexImg.length) {
+        this.coverImgDisplay = 0;
+      }
+      setTimeout(this.mainImgSlide, 5000);
     },
   },
 };
 </script>
 
 <style lang="scss">
-@import "@/src/assets/scss/common.scss";
+@import '@/src/assets/scss/common.scss';
 .index {
   display: flex;
   justify-content: center;
@@ -97,6 +88,7 @@ export default {
   flex-direction: column;
   width: 100vw;
   height: calc(100vh + 1px);
+  background: #000;
   position: relative;
   opacity: 1;
   transform: translateY(0);
@@ -111,7 +103,7 @@ export default {
     position: relative;
     z-index: -3;
     &::after {
-      content: "";
+      content: '';
       display: block;
       width: 100%;
       height: 100%;
@@ -178,7 +170,7 @@ export default {
     bottom: 6vh;
     left: 0;
     &::before {
-      content: "";
+      content: '';
       display: block;
       width: 32px;
       height: 56px;
@@ -192,7 +184,7 @@ export default {
       left: 0;
     }
     &::after {
-      content: "";
+      content: '';
       display: block;
       width: 8px;
       height: 8px;
@@ -242,5 +234,31 @@ export default {
 .mainImg-enter,
 .mainImg-leave-to {
   opacity: 0;
+}
+
+// indexのフェードイン
+.scrollAction-leave-active {
+  // animation: scrollActionAnimation 0.5s;
+  // animation-delay: 0.1s;
+  transition: 0.5s opacity, 0.5s transform;
+}
+.scrollAction-leave-to {
+  transform: translateY(-24px);
+  opacity: 0;
+}
+
+@keyframes scrollActionAnimation {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  // 20%{
+  //   transform: translateY(0);
+  //   opacity: 0;
+  // }
+  100% {
+    transform: translateY(-40px);
+    opacity: 0;
+  }
 }
 </style>

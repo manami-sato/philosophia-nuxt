@@ -12,13 +12,13 @@
 		small.foot__copy &copy; 2021 {{enName}}.
 </template>
 <script>
-import Mixin from "@/src/mixins/mixin.js";
+import Mixin from '@/src/mixins/mixin.js';
 export default {
   mixins: [Mixin],
 };
 </script>
 <style lang="scss">
-@import "@/src/assets/scss/common.scss";
+@import '@/src/assets/scss/common.scss';
 .foot {
   padding: 64px 0 88px;
   &__shere {
