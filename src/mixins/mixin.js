@@ -17,6 +17,6 @@ export default {
     name: '月波',
     enName: 'Tsukinami',
     title: 'Philosophia',
-    titleFull: 'Philosophia - 月波’s Photography Portfolio',
+    desc: '月波’s Photography Portfolio',
   }),
 };

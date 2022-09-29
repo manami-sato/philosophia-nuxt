@@ -7,7 +7,7 @@
 						img(:src="img", alt="Philosophia", v-show="coverImgDisplay === i")
 			div.index__ttl
 				h1 {{title}}
-				p {{enName}}’s Photography Portfolio
+				p {{desc}}
 			div.index__mouse scroll
 </template>
 
