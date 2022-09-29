@@ -64,7 +64,6 @@ export default {
       });
     },
     handleScroll() {
-      console.log('ok');
       this.indexFlag = false;
       setTimeout(this.pageMove, 500);
     },

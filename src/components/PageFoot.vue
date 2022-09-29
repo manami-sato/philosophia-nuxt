@@ -43,11 +43,18 @@ export default {
       &:last-of-type {
         margin: 0;
       }
+      &:hover {
+        path {
+          opacity: 0.5;
+        }
+      }
     }
     path {
       width: 40px;
       height: 40px;
       fill: $black;
+      opacity: 1;
+      transition: 0.2s opacity;
     }
   }
   &__copy {
