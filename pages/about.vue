@@ -10,7 +10,7 @@
 							span {{name}}
 							span - Amateur photographer
 					p
-						|Osaka（20）<br>
+						|20歳 関西圏で写真を撮ります。<br>
 						|使用機材：Canon EOS RP / Canon EOS Kiss X3
 					ul.about__detail--link
 						li(v-for="(item, i) in link", :key="i")
