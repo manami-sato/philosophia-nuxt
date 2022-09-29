@@ -44,8 +44,8 @@ export default {
   width: 100vw;
   height: 160px;
   padding: 0 5vw;
-  color: $accentColor;
-  background: rgba($color: $baceColor, $alpha: 0.8);
+  color: $black;
+  background: rgba($color: $white, $alpha: 0.8);
   position: fixed;
   top: 0;
   z-index: 25;
@@ -56,7 +56,7 @@ export default {
     height: 100%;
     position: relative;
     font-size: 3.2rem;
-    font-family: $font;
+    font-family: $logoFont;
     &--link {
       opacity: 1;
       transition: opacity 0.2s;
@@ -77,7 +77,7 @@ export default {
       flex-direction: column;
       width: 100vw;
       height: 100vh;
-      background: $baceColor;
+      background: $white;
       padding: 0 0 64px;
       opacity: 0;
       position: fixed;
@@ -91,7 +91,7 @@ export default {
         align-items: center;
         gap: 8px;
         font-size: 1.8rem;
-        font-family: $font2;
+        font-family: $navFont;
         margin: 0 0 0 auto;
       }
       @media screen and (max-width: 720px) {
@@ -115,19 +115,19 @@ export default {
           width: 100vw;
           height: 56px;
           font-size: 1.8rem;
-          font-family: $font2;
+          font-family: $navFont;
         }
         a {
           display: flex;
           align-items: center;
           width: 100%;
           height: 100%;
-          color: $accentColor;
+          color: $black;
           background: transparent;
           transition: 0.2s background, 0.2s color;
           &:hover {
-            color: $baceColor;
-            background: $accentColor;
+            color: $white;
+            background: $black;
           }
           @media screen and (min-width: 721px) {
             justify-content: center;
@@ -158,7 +158,7 @@ export default {
         }
         &:hover {
           opacity: 0.6;
-          border-color: $accentColor;
+          border-color: $black;
         }
         p {
           display: none;
@@ -171,8 +171,8 @@ export default {
           display: none;
         }
         &:hover {
-          color: $baceColor;
-          background: $accentColor;
+          color: $white;
+          background: $black;
         }
         p {
           padding: 0 0 0 20%;
@@ -191,7 +191,7 @@ export default {
         width: 100vw;
         height: 56px;
         font-size: 1.8rem;
-        font-family: $font2;
+        font-family: $navFont;
       }
     }
   }
@@ -213,7 +213,7 @@ export default {
         display: block;
         width: 32px;
         height: 3px;
-        background: $accentColor;
+        background: $black;
         border-radius: 2px;
         position: absolute;
         inset: auto auto auto 0;
@@ -235,8 +235,8 @@ export default {
 }
 .navActive {
   a {
-    color: $baceColor;
-    background: $accentColor;
+    color: $white;
+    background: $black;
   }
 }
 .navBtnActive {
@@ -269,7 +269,7 @@ export default {
 }
 .aboutActive {
   @media screen and (min-width: 721px) {
-    border: $accentColor 4px solid;
+    border: $black 4px solid;
   }
 }
 @keyframes SPActive {

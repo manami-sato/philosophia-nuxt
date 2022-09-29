@@ -11,6 +11,7 @@ export default {
     iconPath:
       'https://images.microcms-assets.io/assets/44cafac7c3a24046bac46a486b20bc92/fd15a7cba0d84479b114edf5ae7d5ca6/icon.jpg',
     imgPath: 'https://manami-sato.github.io/philosophia-img/img/',
+    // imgPath: 'https://manami-sato.github.io/philosophia-img/1200/',
     thumbnailPath: 'https://manami-sato.github.io/philosophia-img/thumbnail/',
     productsData: 'https://philosophia.herokuapp.com/',
     name: '月波',

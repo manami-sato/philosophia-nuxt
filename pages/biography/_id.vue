@@ -4,7 +4,7 @@
 		transition(name="pageFadeIn")
 			main(v-show="pageFadeInFlag").bio
 				ul.bio__thumbnail
-					li(v-for="(item, i) in data" :key="i", :class="{vertical:item.vertical}", @click="modalDisplay(i)").bio__thumbnail--contents
+					li(v-for="(item, i) in data" :key="i", @click="modalDisplay(i)").bio__thumbnail--contents
 						img(:src="`${thumbnailPath}img_thumbnail_${item.contentId}.jpg`",  :alt="item.alt")
 				PageFoot
 		transition(name="modalFadeIn")
@@ -12,9 +12,8 @@
 				div(@click="modalDisplay").bio__modal--back
 				div.bio__modal--img
 					ul.bio__modal--img--list
-						transition(name="modalImgFadeIn")
-							li(v-for="(item, i) in data[getItem].img" :key="i", v-if="imgDisplay === i")
-								img(:src="`${imgPath}img_${data[getItem].contentId}_${imgIndex}.jpg`", :alt="data[getItem].alt")
+						li
+							img(:src="`${imgPath}img_${data[getItem].contentId}_${imgIndex}.jpg`", :alt="data[getItem].alt")
 					div.bio__modal--img--info
 						div.bio__modal--date {{data[getItem].date.split("T")[0]}}
 						div.circle
@@ -96,8 +95,10 @@ export default {
   },
   methods: {
     number() {
-      if (this.imgDisplay < 10) {
+      if (this.imgDisplay < 9) {
         this.imgIndex = '0' + (this.imgDisplay + 1);
+      } else {
+        this.imgIndex = this.imgDisplay + 1;
       }
     },
     modalDisplay(i) {
@@ -122,6 +123,8 @@ export default {
     },
     onCircle(i) {
       this.imgDisplay = i;
+      this.number();
+      console.log(this.imgDisplay);
     },
   },
 };
@@ -191,14 +194,14 @@ export default {
           display: block;
           width: 100%;
           height: 100%;
-          background: $accentColor;
+          background: $black;
           position: absolute;
           top: 0;
           left: 0;
           opacity: 0.7;
           transition: 0.2s opacity;
           mix-blend-mode: hue;
-					z-index: 2;
+          z-index: 2;
         }
         &:hover {
           &::before {
@@ -402,15 +405,6 @@ export default {
 /*-------------------------------
 	モーダルウィンドウここまで
 -------------------------------*/
-// .vertical {
-//   &:hover {
-//     img {
-//       height: 170%;
-//       width: 170%;
-//       object-fit: cover;
-//     }
-//   }
-// }
 .circle {
   display: flex;
   margin-top: auto;

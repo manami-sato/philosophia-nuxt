@@ -21,6 +21,6 @@ export default {
 @import '@/src/assets/scss/common.scss';
 .news {
   font-size: 1.5rem;
-  font-family: $font2;
+  font-family: $navFont;
 }
 </style>

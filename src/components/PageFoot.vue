@@ -34,7 +34,7 @@ export default {
       }
     }
     path {
-      fill: $accentColor;
+      fill: $black;
     }
   }
   &__copy {

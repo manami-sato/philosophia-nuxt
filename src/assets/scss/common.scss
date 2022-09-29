@@ -11,8 +11,8 @@ html {
   scroll-behavior: smooth;
 }
 body {
-  // background-color: $baceColor;
-  color: $accentColor;
+  // background-color: $white;
+  color: $black;
   font-family: sans-serif;
   font-size: 1.4rem;
 }
@@ -22,7 +22,7 @@ li {
 
 a {
   text-decoration: none;
-  color: $accentColor;
+  color: $black;
 }
 
 ::selection {
@@ -61,7 +61,7 @@ a {
 }
 
 path {
-  fill: $accentColor;
+  fill: $black;
 }
 
 //

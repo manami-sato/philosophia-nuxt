@@ -133,7 +133,7 @@ export default {
     flex-direction: column;
     width: 90vw;
     max-width: 1000px;
-    color: $baceColor;
+    color: $white;
     mix-blend-mode: difference;
     margin: 0 auto;
     position: absolute;
@@ -142,13 +142,13 @@ export default {
     left: 0;
     right: 0;
     h1 {
-      font-family: $font;
+      font-family: $logoFont;
       font-size: 5rem;
       z-index: 5;
       background: transparent;
     }
     p {
-      font-family: $font2;
+      font-family: $navFont;
       font-size: 1.5rem;
       padding-top: 10px;
       line-height: 20px;
@@ -159,9 +159,9 @@ export default {
     }
   }
   &__mouse {
-    color: $baceColor;
+    color: $white;
     font-size: 1.6rem;
-    font-family: $font;
+    font-family: $logoFont;
     font-weight: bold;
     text-align: center;
     text-shadow: 0 0 20px rgba($color: #000000, $alpha: 1);
@@ -175,7 +175,7 @@ export default {
       width: 32px;
       height: 56px;
       background: transparent;
-      border: $baceColor 3px solid;
+      border: $white 3px solid;
       border-radius: 16px;
       margin: auto;
       position: absolute;
@@ -188,7 +188,7 @@ export default {
       display: block;
       width: 8px;
       height: 8px;
-      background: $baceColor;
+      background: $white;
       border-radius: 4px;
       margin: 12px auto 0;
       position: absolute;

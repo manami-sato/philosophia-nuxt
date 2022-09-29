@@ -51,7 +51,7 @@ export default {
   margin: 0 auto;
   padding: 200px 0 0;
   &__heading {
-    font-family: $font2;
+    font-family: $navFont;
     font-size: 2.2rem;
   }
   &__text {
